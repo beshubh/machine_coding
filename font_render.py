@@ -55,3 +55,4 @@ def solution(compressed):
                 row_result.append(bit)
         result.append(row_result)
     return result
+

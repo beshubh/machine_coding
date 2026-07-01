@@ -8,7 +8,6 @@ import time
 from pathlib import Path
 from dataclasses import dataclass
 
-
 # Async logs, no guranee that log() will persist the data
 class Log:
 
@@ -247,3 +246,4 @@ class DurableBatchingLog:
 
     def __exit__(self, *args, **kwargs):
         self.close()
+
