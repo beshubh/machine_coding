@@ -19,9 +19,7 @@ class AgentContainer:
 
 class AssignmentSystem:
     def __init__(self, agents: list[str]):
-        self._agents = {
-            name: AgentContainer(name=name) for name in agents
-        }
+        self._agents = {name: AgentContainer(name=name) for name in agents}
         self._assigned_conversations: dict[int, str] = {}
 
         # Heap entry
@@ -47,10 +45,10 @@ class AssignmentSystem:
 
     def set_limit(self, agent_name: str, limit: int) -> None:
         if limit < 0:
-            raise ValueError('Limit cannot be negative')
+            raise ValueError("Limit cannot be negative")
         agent = self._agents.get(agent_name)
         if agent is None:
-            raise LookupError('Agent not found')
+            raise LookupError("Agent not found")
         agent.limit = limit
 
         if agent.has_capacity():
@@ -58,7 +56,7 @@ class AssignmentSystem:
 
     def assign(self, conversation_id: int) -> str | None:
         if conversation_id in self._assigned_conversations:
-            raise ValueError('Conversation already assigned')
+            raise ValueError("Conversation already assigned")
 
         while self._pq:
             entry = heapq.heappop(self._pq)
@@ -78,7 +76,7 @@ class AssignmentSystem:
 
     def close(self, conversation_id: int) -> None:
         if conversation_id not in self._assigned_conversations:
-            raise LookupError('Conversation not found in assigment')
+            raise LookupError("Conversation not found in assigment")
 
         agent_name = self._assigned_conversations[conversation_id]
         agent = self._agents[agent_name]
