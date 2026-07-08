@@ -10,3 +10,9 @@ class Solution:
                 result += counter[ch]
             else:
                 result += counter[ch] - 1
+
+        for ch in set(s):
+            if counter[ch] % 2 != 0:
+                result += 1
+                break
+        return result
