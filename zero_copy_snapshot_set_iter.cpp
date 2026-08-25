@@ -83,6 +83,6 @@ class Solution {
                 result.push_back(iter.cursor < iter.limit ? 1 : 0);
             }
         }
-        return {};
+        return result;
     }
 };
