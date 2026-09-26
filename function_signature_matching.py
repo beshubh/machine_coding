@@ -1,4 +1,4 @@
-def can_accept(
+def can_accept_v0(
     registry: list[list[tuple[str, str]]],
     call_args: list[str],
 ) -> bool:
@@ -24,6 +24,31 @@ def can_accept(
         return dfs(0, 0)
 
     return any(matches(signature) for signature in registry)
+
+
+def can_accept(registry, call_args):
+    def inner(signature):
+        def go(i: int, j: int):
+            if i >= len(signature):
+                return j >= len(call_args)
+
+            dtype, kind = signature[i]
+            if kind == "required":
+                ans = j < len(call_args) and dtype == call_args[j] and go(i + 1, j + 1)
+            elif kind == "optional":
+                # skip
+                ans = go(i + 1, j)
+
+                # take if datatypes match
+                if not ans and j < len(call_args) and dtype == call_args[j]:
+                    ans = go(i + 1, j + 1)
+            else:
+                ans = all(c == dtype for c in call_args[j:])
+            return ans
+
+        return go(0, 0)
+
+    return any(inner(m) for m in registry)
 
 
 def test_example_1():
